@@ -281,12 +281,28 @@ function addChatMessage(type, content, metadata = null) {
                 <div class="message-sources" style="margin-top: 0.75rem; padding-top: 0.75rem; border-top: 1px solid var(--border-color);">
                     <h5 style="font-size: 0.875rem; margin-bottom: 0.5rem;"><i class="fas fa-link"></i> Sources (${metadata.sources.length})</h5>
                     <div style="font-size: 0.8rem; max-height: 150px; overflow-y: auto;">
-                        ${metadata.sources.slice(0, 3).map((source, i) => `
-                            <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
-                                <strong>${i + 1}.</strong> ${source.type || 'Unknown'}
-                                ${source.content ? `<div style="margin-top: 0.25rem; color: var(--text-secondary);">${source.content.substring(0, 100)}${source.content.length > 100 ? '...' : ''}</div>` : ''}
-                            </div>
-                        `).join('')}
+                        ${metadata.sources.slice(0, 3).map((source, i) => {
+                            const rawId = (source.entity_id ?? source.entityId ?? '').toString();
+                            const isNumericId = rawId && /^\d+$/.test(rawId);
+                            const entityRefHtml = rawId ? `
+                                <div style="margin-top: 0.25rem; font-size: 0.75rem; color: var(--text-secondary);">
+                                    Ref: 
+                                    ${isNumericId
+                                        ? `<a href="/entity/${rawId}" target="_blank" rel="noopener noreferrer">${rawId}</a>`
+                                        : `<code>${rawId}</code>`
+                                    }
+                                    <button class="btn btn-xs btn-secondary" style="margin-left: 0.5rem;" onclick="navigator.clipboard.writeText('${rawId.replace(/'/g, "\\'")}')">Copy</button>
+                                </div>
+                            ` : '';
+
+                            return `
+                                <div style="margin-bottom: 0.5rem; padding: 0.5rem; background: var(--bg-secondary); border-radius: 4px;">
+                                    <strong>${i + 1}.</strong> ${source.type || 'Unknown'}${source.name ? ` — ${source.name}` : ''}
+                                    ${entityRefHtml}
+                                    ${source.content ? `<div style="margin-top: 0.25rem; color: var(--text-secondary);">${source.content.substring(0, 100)}${source.content.length > 100 ? '...' : ''}</div>` : ''}
+                                </div>
+                            `;
+                        }).join('')}
                         ${metadata.sources.length > 3 ? `<div style="color: var(--text-secondary); font-size: 0.75rem;">... and ${metadata.sources.length - 3} more sources</div>` : ''}
                     </div>
                 </div>

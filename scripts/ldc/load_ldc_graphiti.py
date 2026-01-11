@@ -19,8 +19,16 @@ CONFIG_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'con
 with open(CONFIG_PATH, 'r') as f:
     config = yaml.safe_load(f)
 
-# Set OpenAI API key from config
-os.environ['OPENAI_API_KEY'] = config['openai']['api_key']
+# Require OpenAI API key from environment variable only
+if not os.environ.get('OPENAI_API_KEY'):
+    print("⚠️  WARNING: OPENAI_API_KEY environment variable not set!")
+    print("   Please export OPENAI_API_KEY before running this script:")
+    print("   export OPENAI_API_KEY='sk-proj-...'")
+    print("")
+    print("   Get your API key from: https://platform.openai.com/api-keys")
+    sys.exit(1)
+else:
+    print("✓ Using OpenAI API key from environment variable")
 
 from src.core.falkordb_client import FalkorDBClient
 

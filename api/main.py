@@ -23,9 +23,8 @@ config_path = os.path.join(os.path.dirname(__file__), '..', 'config', 'config.ya
 with open(config_path, 'r') as f:
     config = yaml.safe_load(f)
 
-# Set OpenAI API key from config if available
-if 'openai' in config and 'api_key' in config['openai'] and config['openai']['api_key']:
-    os.environ['OPENAI_API_KEY'] = config['openai']['api_key']
+# OpenAI API key should be set via OPENAI_API_KEY environment variable
+# Do NOT override from config to avoid using stale/invalid keys
 
 # Initialize FastAPI app
 app = FastAPI(

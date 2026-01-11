@@ -40,17 +40,19 @@ class QueryEngine:
         # production_area_repo may not exist in all deployments
         self.production_area_repo = getattr(falkordb, 'production_area_repo', None)
         
-        # Initialize LLM (optional - requires API key)
+        # Initialize LLM (optional - requires API key from environment)
         try:
             import os
-            if os.environ.get('OPENAI_API_KEY') or config.get('openai_api_key'):
+            if os.environ.get('OPENAI_API_KEY'):
+                # Use environment variable only - do NOT pass api_key parameter
+                # This allows ChatOpenAI to pick up OPENAI_API_KEY from environment
                 self.llm = ChatOpenAI(
                     model=config.get('model', 'gpt-4-turbo-preview'),
-                    temperature=config.get('temperature', 0.1),
-                    api_key=config.get('openai_api_key')
+                    temperature=config.get('temperature', 0.1)
                 )
+                logger.info("LLM initialized with OpenAI API key from environment")
             else:
-                logger.warning("OpenAI API key not found. LLM features will be disabled.")
+                logger.warning("OPENAI_API_KEY environment variable not set. LLM features will be disabled.")
                 self.llm = None
         except Exception as e:
             logger.warning(f"Could not initialize LLM: {e}. LLM features will be disabled.")
@@ -212,6 +214,7 @@ Context:
                     for g in geographies:
                         subgraph_data.append({
                             "type": "Geography",
+                            "entity_id": getattr(g, 'id', None),
                             "name": g.name,
                             "labels": ["Geography"],
                             "code": g.gid_code
@@ -224,6 +227,7 @@ Context:
                     for c in commodities:
                         subgraph_data.append({
                             "type": "Commodity",
+                            "entity_id": getattr(c, 'id', None),
                             "name": c.name,
                             "labels": ["Commodity"]
                         })
