@@ -51,7 +51,6 @@ nohup.out
 .DS_Store
 
 # FalkorDB data
-data/
 *.rdb
 dump.rdb
 appendonly.aof

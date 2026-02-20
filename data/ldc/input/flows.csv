@@ -1,0 +1,10 @@
+source_country,destination_country,commodity,commodity_season,source_country_ts_id,destination_country_ts_id
+FRA,USA,Common Wheat,,12345,67890
+USA,FRA,Yellow Corn,,12346,67891
+FRA,USA,Barley,,12347,67892
+USA,FRA,Hard Red Wheat,Spring,12348,67893
+FRA,USA,Durum Wheat,,12349,67894
+USA,FRA,Soft Red Wheat,Winter,12350,67895
+FRA,USA,Dried Distillers Grains,,12351,67896
+USA,FRA,Peas,,12352,67897
+USA,FRA,Cotton,,12353,67898

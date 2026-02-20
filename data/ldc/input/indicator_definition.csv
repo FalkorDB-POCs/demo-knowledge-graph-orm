@@ -1,0 +1,10 @@
+id,name,indicator,sourceName,forecastDays,forecastType,unit
+temperature_min_ecmwf_ifs_stfc_daily,Temperature Min ECMWF Ifs Stfc Daily,temperature,ecmwf_ifs,15,stfc,°C
+temperature_max_ncep_gefs_stfc_daily,Temperature Max NCEP GEFS Stfc Daily,temperature,gefs,16,stfc,°C
+precipitation_ncep_gfs_stfc_daily,Precipitation NCEP GFS Stfc Daily,precipitation,ncep_gfs,16,stfc,mm
+precipitation_ecmwf_aifs_stfc_daily,Precipitation ECMWF Aifs Stfc Daily,precipitation,ecmwf_aifs,15,stfc,mm
+soil_temperature_ii_ecmwf_ifs_stfc_daily,Soil Temperature II ECMWF Ifs Stfc Daily,soil_temperature,ecmwf_ifs,15,stfc,°C
+soil_temperature_i_ecmwf_ifs_stfc_daily,Soil Temperature I ECMWF Ifs Stfc Daily,soil_temperature,ecmwf_ifs,15,stfc,°C
+soil_moisture_ii_ecmwf_ifs_stfc_daily,Soil Moisture II ECMWF Ifs Stfc Daily,soil_moisture,ecmwf_ifs,15,stfc,Volume fraction (0-1)
+soil_moisture_i_ncep_gefs_stfc_daily,Soil Moisture I NCEP GEFS Stfc Daily,soil_moisture,gefs,16,stfc,volume fraction (0-1)
+snow_melt_ecmwf_ifs_stfc_daily,Snow Melt ECMWF Ifs Stfc Daily,snow_melt,ecmwf_ifs,15,stfc,mm

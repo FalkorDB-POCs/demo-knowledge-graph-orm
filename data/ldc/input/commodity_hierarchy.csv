@@ -1,0 +1,29 @@
+Level0,Level1,Level2,Level3
+Grains,Wheat,Common Wheat,Hard Red Wheat
+Grains,Wheat,Common Wheat,Soft Red Wheat
+Grains,Wheat,Common Wheat,White Wheat
+Grains,Wheat,Durum Wheat,
+Grains,Corn,White Corn,
+Grains,Corn,Yellow Corn,
+Grains,Barley,,
+Grains,Sorghum,,
+Grains,Flour,,
+Grains,Dried Distillers Grains,,
+Grains,Pulses,Lentils,
+Grains,Pulses,Chickpeas,
+Grains,Pulses,Redgram,
+Grains,Pulses,Peas
+Oilseeds,Palm,,
+Oilseeds,Soybean,,
+Oilseeds,Rapeseed,,
+Oilseeds,Sunseed,,
+Rice,,,
+Cotton,,,
+Cocoa,,,
+Sugar,Sugarcane,,
+Sugar,Sugarbeet,,
+Coffee,Coffee Arabica,,
+Coffee,Coffee Robusta,,
+Citrus,Orange,,
+Citrus,Lemon,,
+Citrus,Lime,,
