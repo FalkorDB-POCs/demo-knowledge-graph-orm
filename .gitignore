@@ -75,3 +75,4 @@ htmlcov/
 .LSOverride
 Thumbs.db
 config/config.yaml
+.venv/
