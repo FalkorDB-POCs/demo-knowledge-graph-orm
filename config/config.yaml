@@ -4,7 +4,7 @@
 falkordb:
   host: "localhost"
   port: 6379
-  graph_name: "ldc_graph"
+  graph_name: "demo_graph"
   username: null
   password: null
   ssl: false
@@ -55,7 +55,7 @@ api:
     - "http://127.0.0.1:8080"
     - "http://localhost:3000"
     - "http://127.0.0.1:3000"
-    - "https://ldc-internal.com"
+    - "https://demo-internal.com"
   
 # Data Ingestion
 ingestion:

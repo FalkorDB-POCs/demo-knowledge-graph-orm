@@ -1,4 +1,4 @@
-// Tijara Knowledge Graph - Web Interface JavaScript
+// Demo Knowledge Graph - Web Interface JavaScript
 
 // Configuration
 let API_BASE_URL = localStorage.getItem('apiBaseUrl') || 'http://127.0.0.1:8080';
@@ -363,7 +363,7 @@ function clearChat() {
             <i class="fas fa-robot"></i>
             <div class="message-content">
                 <strong>Trading Copilot</strong>
-                <p>Hello! I'm your LDC Trading Copilot. Ask me anything about commodities, markets, trade flows, or production data.</p>
+                <p>Hello! I'm your Demo Trading Copilot. Ask me anything about commodities, markets, trade flows, or production data.</p>
             </div>
         </div>
     `;
@@ -738,7 +738,7 @@ function initIngestion() {
     $('ingestBtn').addEventListener('click', ingestData);
     $('ingestDocumentBtn').addEventListener('click', ingestDocument);
     
-    // LDC CSV format sample datasets
+// Demo CSV format sample datasets
     const sampleDatasets = {
         commodity_hierarchy: {
             csv: `Level0,Level1,Level2,Level3
@@ -817,7 +817,7 @@ USA,United States,1,USA.1_1,Alabama,,`,
         });
     });
     
-    // LDC-focused sample document texts
+// Demo-focused sample document texts
     const sampleDocuments = {
         market_report: {
             text: `France maintained its position as a major wheat exporter to the United States in 2024, with Common Wheat and Durum Wheat leading the commodity flows. Trade data shows France exported approximately 2.5 million metric tons of Common Wheat to the US market, representing a 12% increase from the previous year.
@@ -825,7 +825,7 @@ USA,United States,1,USA.1_1,Alabama,,`,
 In reverse trade flows, the United States shipped significant volumes of Yellow Corn to France, totaling 1.8 million metric tons. This bilateral trade relationship continues to strengthen, with both countries benefiting from complementary agricultural production cycles.
 
 Production areas in northern France, particularly the Hauts-de-France and Île-de-France regions, reported favorable growing conditions for wheat varieties. Meanwhile, US corn belt states maintained steady Yellow Corn production despite variable weather patterns.`,
-            source: 'LDC Quarterly Trade Report Q1 2024'
+source: 'Demo Quarterly Trade Report Q1 2024'
         },
         trade_news: {
             text: `Recent developments in France-USA agricultural trade show increasing diversity in commodity exchanges. Beyond traditional wheat flows, France has begun exporting Dried Distillers Grains and Barley to the United States, responding to growing demand in the US livestock sector.
@@ -840,8 +840,8 @@ Balance sheet data indicates both countries maintain healthy carry-in and carry-
 
 French production areas for Common Wheat and Durum Wheat report above-average soil moisture levels, while US Yellow Corn production areas in the Midwest show adequate rainfall patterns. These weather indicators suggest strong harvest prospects for both countries.
 
-The LDC system continues to monitor weather indicators including temperature, precipitation, and other climatic variables across all production areas to provide early warning of potential supply disruptions.`,
-            source: 'LDC Production & Weather Update - March 2024'
+The Demo system continues to monitor weather indicators including temperature, precipitation, and other climatic variables across all production areas to provide early warning of potential supply disruptions.
+source: 'Demo Production & Weather Update - March 2024'
         }
     };
     
@@ -1003,7 +1003,7 @@ function displayDocumentIngestionResults(result) {
 function initImpact() {
     $('analyzeImpactBtn').addEventListener('click', analyzeImpact);
     
-    // LDC Reference geometries for France and USA production areas
+// Demo Reference geometries for France and USA production areas
     const referenceGeometries = {
         // France Regions
         france_north: {

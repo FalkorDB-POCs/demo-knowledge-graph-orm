@@ -129,11 +129,11 @@ echo ""
 echo "Test 4: Natural Language Query (Trading Copilot)"
 echo "------------------------------------------------"
 
-echo "Emma asks: 'What countries are in the LDC system?'"
+echo "Emma asks: 'What countries are in the Demo system?'"
 EMMA_NL=$(curl -s -X POST http://127.0.0.1:8080/query \
   -H "Authorization: Bearer $EMMA_TOKEN" \
   -H "Content-Type: application/json" \
-  -d '{"question": "What countries are in the LDC system?", "return_sources": false}' | \
+  -d '{"question": "What countries are in the Demo system?", "return_sources": false}' | \
   python3 -c "import sys, json; print(json.load(sys.stdin).get('answer', 'No answer')[:200])")
 echo "Answer preview: $EMMA_NL..."
 

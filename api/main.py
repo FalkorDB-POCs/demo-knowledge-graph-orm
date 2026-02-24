@@ -28,8 +28,8 @@ with open(config_path, 'r') as f:
 
 # Initialize FastAPI app
 app = FastAPI(
-    title="Tijara Knowledge Graph API (ORM)",
-    description="API for LDC's commodity trading knowledge graph with ORM layer",
+    title="Knowledge Graph API (ORM)",
+    description="API for commodity trading knowledge graph with ORM layer",
     version="1.0.0"
 )
 
@@ -278,9 +278,9 @@ async def root():
     if os.path.exists(web_index):
         return FileResponse(web_index)
     else:
-        # Fallback to API info if web UI not found
+# Fallback to API info if web UI not found
         return {
-            "name": "Tijara Knowledge Graph API (ORM)",
+            "name": "Knowledge Graph API (ORM)",
             "version": "1.0.0",
             "description": "Commodity trading intelligence platform with ORM layer",
             "endpoints": {
@@ -328,8 +328,8 @@ async def test_health_page():
 @app.get("/config")
 async def get_config():
     """Get system configuration including active dataset."""
-    graph_name = config['falkordb'].get('graph_name', 'tijara_graph')
-    dataset_type = 'ldc' if 'ldc' in graph_name.lower() else 'demo'
+    graph_name = config['falkordb'].get('graph_name', 'knowledge_graph')
+    dataset_type = 'production' if 'production' in graph_name.lower() else 'demo'
     return {
         "graph_name": graph_name,
         "dataset_type": dataset_type,

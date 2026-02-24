@@ -1,5 +1,5 @@
 """
-Populate LDC Knowledge Graph from Input CSV Files (ORM Version - FIXED)
+Populate Demo Knowledge Graph from Input CSV Files (ORM Version - FIXED)
 Loads data using FalkorDB ORM entity models with explicit relationship creation
 
 FIXES:
@@ -33,16 +33,16 @@ from falkordb_orm import Repository
 INPUT_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'ldc', 'input')
 
 # Graph name
-LDC_GRAPH_NAME = "ldc_graph"
+Demo_GRAPH_NAME = "ldc_graph"
 
 
-class FixedORMLDCDataLoader:
-    """Loads LDC commodity data from CSV files using FalkorDB ORM with explicit relationships."""
+class FixedORMDemoDataLoader:
+    """Loads Demo commodity data from CSV files using FalkorDB ORM with explicit relationships."""
     
     def __init__(self):
         """Initialize connection and repositories."""
         print("\n" + "="*60)
-        print("🚀 LDC Data Loader (ORM Version - FIXED)")
+        print("🚀 Demo Data Loader (ORM Version - FIXED)")
         print("="*60)
         print(f"Using falkordb-py-orm with explicit relationship creation")
         print()
@@ -58,8 +58,8 @@ class FixedORMLDCDataLoader:
             ssl=falkordb_config.get('ssl', False)
         )
         
-        self.graph = self.client.select_graph(LDC_GRAPH_NAME)
-        print(f"✓ Connected to FalkorDB graph: {LDC_GRAPH_NAME}")
+        self.graph = self.client.select_graph(Demo_GRAPH_NAME)
+        print(f"✓ Connected to FalkorDB graph: {Demo_GRAPH_NAME}")
         
         # Initialize ORM repositories
         self.commodity_repo = CommodityRepository(self.graph, Commodity)
@@ -86,7 +86,7 @@ class FixedORMLDCDataLoader:
     
     def clear_graph(self):
         """Clear the existing graph data."""
-        print(f"\n🗑️  Clearing existing data in {LDC_GRAPH_NAME}...")
+        print(f"\n🗑️  Clearing existing data in {Demo_GRAPH_NAME}...")
         try:
             self.graph.query("MATCH (n) DETACH DELETE n")
             print("✓ Graph cleared")
@@ -592,7 +592,7 @@ class FixedORMLDCDataLoader:
     def get_statistics(self):
         """Get graph statistics."""
         print("\n" + "="*60)
-        print("📊 LDC Graph Statistics")
+        print("📊 Demo Graph Statistics")
         print("="*60)
         print()
         
@@ -640,7 +640,7 @@ class FixedORMLDCDataLoader:
         print("\n" + "="*60)
     
     def load_all(self):
-        """Load all LDC data with proper relationship creation."""
+        """Load all Demo data with proper relationship creation."""
         try:
             # Clear existing data
             self.clear_graph()
@@ -674,8 +674,8 @@ class FixedORMLDCDataLoader:
             # Show statistics
             self.get_statistics()
             
-            print("\n✅ LDC data loading complete!")
-            print(f"Graph '{LDC_GRAPH_NAME}' is ready for use.")
+            print("\n✅ Demo data loading complete!")
+            print(f"Graph '{Demo_GRAPH_NAME}' is ready for use.")
             print("✨ All data loaded with explicit relationship creation!")
             print()
             
@@ -687,5 +687,5 @@ class FixedORMLDCDataLoader:
 
 
 if __name__ == "__main__":
-    loader = FixedORMLDCDataLoader()
+    loader = FixedORMDemoDataLoader()
     loader.load_all()

@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """
 Switch between different FalkorDB graphs
-Usage: python switch_graph.py [tijara_kg|ldc_graph]
+Usage: python switch_graph.py [demo_kg|demo_graph]
 """
 
 import sys
@@ -11,8 +11,8 @@ import os
 CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config', 'config.yaml')
 
 AVAILABLE_GRAPHS = {
-    'tijara_kg': 'Demo data with sample global commodities',
-    'ldc_graph': 'LDC-specific data (France & USA focus)'
+    'demo_kg': 'Demo data with sample global commodities',
+'demo_graph': 'Demo-specific data (France & USA focus)'
 }
 
 def switch_graph(graph_name: str):

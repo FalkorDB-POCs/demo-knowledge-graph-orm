@@ -1,8 +1,8 @@
-# LDC Commodity Trading Knowledge Graph (ORM Implementation)
+# Commodity Trading Knowledge Graph (ORM Implementation)
 
-**ORM-based reimplementation** of the LDC Commodity Trading Knowledge Graph using [falkordb-py-orm](https://github.com/FalkorDB/falkordb-py-orm). This is a sister repository to [tijara-knowledge-graph](https://github.com/FalkorDB-POCs/tijara-knowledge-graph) demonstrating best practices with declarative entity mapping and repository patterns.
+**ORM-based reimplementation** of the Commodity Trading Knowledge Graph using [falkordb-py-orm](https://github.com/FalkorDB/falkordb-py-orm). This is a sister repository to [knowledge-graph](https://github.com/FalkorDB-POCs/knowledge-graph) demonstrating best practices with declarative entity mapping and repository patterns.
 
-> 🔗 **Original Implementation**: [tijara-knowledge-graph](https://github.com/FalkorDB-POCs/tijara-knowledge-graph)  
+> 🔗 **Original Implementation**: [knowledge-graph](https://github.com/FalkorDB-POCs/knowledge-graph)
 > 📚 **ORM Framework**: [falkordb-py-orm](https://github.com/FalkorDB/falkordb-py-orm)
 
 [![FalkorDB](https://img.shields.io/badge/FalkorDB-Graph%20Database-blue)](https://www.falkordb.com/)
@@ -12,7 +12,7 @@
 
 ## 🎯 Overview
 
-This repository demonstrates **ORM-based graph development** using falkordb-py-orm for LDC's commodity trading system. The same functionality as the original implementation, but with:
+This repository demonstrates **ORM-based graph development** using falkordb-py-orm for a commodity trading system. The same functionality as the original implementation, but with:
 
 ### ✨ ORM Benefits
 - **Declarative Entities**: Define graph nodes with `@node` and `@relationship` decorators
@@ -33,9 +33,8 @@ This repository demonstrates **ORM-based graph development** using falkordb-py-o
 
 The system supports two distinct datasets:
 
-### 1. LDC Production Dataset (`ldc_graph`)
-
-Official LDC commodity trading data for France-USA bilateral trade analysis.
+### 1. Production Dataset (`production_graph`)
+Official commodity trading data for France-USA bilateral trade analysis.
 
 **Data Coverage:**
 - **Countries**: France (FRA), United States (USA)
@@ -48,9 +47,9 @@ Official LDC commodity trading data for France-USA bilateral trade analysis.
 
 **Use Cases:** Production analysis, trade flow queries, impact assessment
 
-📖 **[Full LDC Dataset Documentation →](data/ldc/README.md)**
+📖 **[Full Production Dataset Documentation →](data/production/README.md)**
 
-### 2. Demo Dataset (`tijara_graph`)
+### 2. Demo Dataset (`demo_graph`)
 
 Synthetic sample data for testing, demonstrations, and training.
 
@@ -142,7 +141,7 @@ Relationships: 14,714 total
 
 ```bash
 # 1. Clone repository
-cd tijara-knowledge-graph
+cd knowledge-graph
 
 # 2. Install dependencies
 pip install -r requirements.txt
@@ -153,9 +152,9 @@ cp config/config.example.yaml config/config.yaml
 
 # 4. Load data (choose one):
 
-# Option A: Load LDC production data
-python3 scripts/ldc/load_ldc_data.py          # Load to FalkorDB (3,444 nodes)
-python3 scripts/ldc/load_ldc_graphiti.py      # Load to Graphiti (embeddings)
+# Option A: Load production data
+python3 scripts/production/load_production_data.py          # Load to FalkorDB (3,444 nodes)
+python3 scripts/production/load_production_graphiti.py      # Load to Graphiti (embeddings)
 
 # Option B: Load demo/sample data
 python3 -m uvicorn api.main:app --host 0.0.0.0 --port 8000  # Start API first
@@ -176,7 +175,7 @@ open http://localhost:8000
 **Features:**
 - **Chat-Style Interface**: Conversational experience with message history
 - **Quick Questions**: 6 pre-configured buttons for common queries
-  - What countries are in the LDC system?
+  - What countries are in the system?
   - What commodities does France export to the United States?
   - What commodities does USA export to France?
   - What balance sheets are available in the system?
@@ -230,7 +229,7 @@ open http://localhost:8000
 ---
 
 ### Tab 3: 📥 Data Ingestion
-**Load data matching LDC CSV formats**
+**Load data matching production CSV formats**
 
 **Section A: CSV/JSON Data Upload**
 - **5 Sample Datasets**: Commodity Hierarchy, Trade Flows, Balance Sheets, Production Areas, Geometries
@@ -259,7 +258,7 @@ USA,United States,0,,
 **Section B: Document Ingestion**
 - **Unstructured Text Processing**: Market reports, news, analysis
 - **Graphiti Integration**: Automatic entity extraction
-- **3 Sample Documents**: LDC-focused market reports, trade news, production updates
+- **3 Sample Documents**: Production-focused market reports, trade news, production updates
 - **Output**: Extracted entities with semantic embeddings
 
 ---
@@ -338,7 +337,7 @@ ORDER BY commodity
 falkordb:
   host: localhost
   port: 6379
-  graph_name: ldc_graph          # Use 'ldc_graph' for production, 'tijara_graph' for demo
+graph_name: production_graph          # Use 'production_graph' for production, 'demo_graph' for demo
 
 graphiti:
   falkordb_connection:
@@ -360,7 +359,7 @@ api:
 ## 📁 Project Structure
 
 ```
-tijara-knowledge-graph/
+knowledge-graph/
 ├── README.md                          # This file
 ├── requirements.txt                   # Python dependencies
 │
@@ -393,9 +392,9 @@ tijara-knowledge-graph/
 │       └── js/app.js                  # Frontend logic
 │
 ├── data/                              # Datasets
-│   ├── ldc/                           # LDC production dataset
-│   │   ├── README.md                  # LDC dataset documentation
-│   │   └── input/                     # CSV data files (place LDC CSVs here)
+│   ├── production/                           # Production dataset
+│   │   ├── README.md                  # Production dataset documentation
+│   │   └── input/                     # CSV data files (place production CSVs here)
 │   │       ├── commodity_hierarchy.csv
 │   │       ├── flows.csv
 │   │       ├── geometries.csv
@@ -409,9 +408,9 @@ tijara-knowledge-graph/
 │       └── input/                     # Sample data files (optional)
 │
 ├── scripts/
-│   ├── ldc/                           # LDC data loading scripts
-│   │   ├── load_ldc_data.py           # Load LDC CSV data to FalkorDB
-│   │   └── load_ldc_graphiti.py       # Load LDC data to Graphiti
+│   ├── production/                           # Production data loading scripts
+│   │   ├── load_production_data.py           # Load production CSV data to FalkorDB
+│   │   └── load_production_graphiti.py       # Load production data to Graphiti
 │   ├── demo/                          # Demo data loading scripts
 │   │   └── load_demo_data.py          # Load sample data via API
 │   └── switch_graph.py                # Switch between graphs
@@ -463,7 +462,7 @@ POST /ingest
 POST /ingest/document
 {
   "text": "France exported 2.5M tons of wheat...",
-  "source": "LDC Market Report"
+  "source": "Market Report"
 }
 ```
 
@@ -523,7 +522,7 @@ GET /stats
 The system implements comprehensive Role-Based Access Control (RBAC) with:
 
 #### Multi-Graph Architecture
-- **Data Graph** (`ldc_graph`/`tijara_graph`): Application data (commodities, trade flows)
+- **Data Graph** (`production_graph`/`demo_graph`): Application data (commodities, trade flows)
 - **RBAC Graph** (`rbac_graph`): Security metadata (users, roles, permissions)
 - **Graphiti Graph** (`graphiti`): Semantic search embeddings
 
@@ -670,7 +669,7 @@ security:
 python3 -c "
 from falkordb import FalkorDB
 db = FalkorDB(host='localhost', port=6379)
-graph = db.select_graph('ldc_graph')
+graph = db.select_graph('production_graph')
 result = graph.query('MATCH (n) RETURN count(n)')
 print(f'Nodes: {result.result_set[0][0]}')
 "
@@ -687,27 +686,27 @@ python3 -m uvicorn api.main:app --host 0.0.0.0 --port 8000
 ```
 
 ### Low confidence scores?
-- Ensure Graphiti data is loaded: `python3 populate_ldc_graphiti.py`
+- Ensure Graphiti data is loaded: `python3 populate_production_graphiti.py`
 - Check OpenAI API key is configured
 - Verify case-sensitive queries match data (use "France", not "france")
 
 ## 📚 Documentation
 
 ### Datasets
-- **[LDC Dataset Guide](data/ldc/README.md)** - Production data structure, CSV formats, loading instructions
+- **[Production Dataset Guide](data/production/README.md)** - Production data structure, CSV formats, loading instructions
 - **[Demo Dataset Guide](data/demo/README.md)** - Sample data for testing and demonstrations
 
 ## 🤝 Contributing
 
-This is an internal LDC project. For questions or improvements:
+This is an internal project. For questions or improvements:
 1. Review existing documentation in `docs/`
-2. Test changes with `test_ldc_graph.py`
+2. Test changes with `test_production_graph.py`
 3. Update relevant documentation
 4. Contact the Data & Analytics team
 
 ## 📄 License
 
-Internal LDC Project - All Rights Reserved
+Internal Project - All Rights Reserved
 
 ## 🎉 Acknowledgments
 

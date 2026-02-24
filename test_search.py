@@ -1,7 +1,7 @@
 """Test FalkorDB search directly"""
 
 import sys
-sys.path.insert(0, '/Users/shaharbiron/Documents/FalkorDB/Poc/LDC/tijara-knowledge-graph')
+sys.path.insert(0, '/Users/shaharbiron/Documents/FalkorDB/Poc/Demo/tijara-knowledge-graph')
 
 from src.core.falkordb_client import FalkorDBClient
 

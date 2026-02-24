@@ -1,6 +1,6 @@
 """
-Populate Graphiti with LDC Data for Semantic Search (Neo4j Backend)
-Creates episodes from structured LDC data for natural language queries
+Populate Graphiti with Demo Data for Semantic Search (Neo4j Backend)
+Creates episodes from structured Demo data for natural language queries
 """
 
 import os
@@ -26,9 +26,9 @@ os.environ['OPENAI_API_KEY'] = config['openai']['api_key']
 from src.core.falkordb_client import FalkorDBClient
 
 print("\n" + "="*60)
-print("🚀 LDC Graphiti Data Loader (Neo4j Backend)")
+print("🚀 Demo Graphiti Data Loader (Neo4j Backend)")
 print("="*60)
-print("Loading structured LDC data into Graphiti via Neo4j")
+print("Loading structured Demo data into Graphiti via Neo4j")
 print()
 
 # Neo4j connection details
@@ -95,13 +95,13 @@ async def load_commodity_data():
             commodity_texts.append(f"{commodity} is a {category} variety")
     
     # Add as single episode with all commodity info
-    if commodity_texts:
-        text = "LDC commodities: " + ". ".join(commodity_texts) + "."
+if commodity_texts:
+        text = "Demo commodities: " + ". ".join(commodity_texts) + "."
         await graphiti.add_episode(
-            name="LDC_Commodities",
+            name="Demo_Commodities",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Commodity Hierarchy",
+            source_description="Demo Commodity Hierarchy",
             reference_time=datetime.now()
         )
     
@@ -123,13 +123,13 @@ async def load_geography_data():
     for row in results:
         text_parts.append(f"{row['name']} ({row['code']})")
     
-    if text_parts:
-        text = "LDC system covers " + " and ".join(text_parts) + " for commodity trading and production analysis."
+if text_parts:
+        text = "Demo system covers " + " and ".join(text_parts) + " for commodity trading and production analysis."
         await graphiti.add_episode(
-            name="LDC_Countries",
+            name="Demo_Countries",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Geography",
+            source_description="Demo Geography",
             reference_time=datetime.now()
         )
     
@@ -151,13 +151,13 @@ async def load_trade_flows():
         season_str = f" ({row['season']} season)" if row['season'] else ""
         flow_texts.append(f"{row['source']} exports {row['commodity']}{season_str} to {row['destination']}")
     
-    if flow_texts:
+if flow_texts:
         text = "Trade flows: " + ". ".join(flow_texts) + "."
         await graphiti.add_episode(
-            name="LDC_Trade_Flows",
+            name="Demo_Trade_Flows",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Trade Flows",
+            source_description="Demo Trade Flows",
             reference_time=datetime.now()
         )
     
@@ -181,11 +181,11 @@ async def load_production_areas():
     
     if prod_texts:
         text = "Production areas tracked for: " + ", ".join(prod_texts) + "."
-        await graphiti.add_episode(
-            name="LDC_Production_Areas",
+await graphiti.add_episode(
+            name="Demo_Production_Areas",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Production Areas",
+            source_description="Demo Production Areas",
             reference_time=datetime.now()
         )
     
@@ -206,13 +206,13 @@ async def load_balance_sheets():
         season_str = f" ({row['season']} season)" if row['season'] else ""
         sheet_texts.append(f"{row['country']} - {row['product']}{season_str}")
     
-    if sheet_texts:
+if sheet_texts:
         text = "Balance sheets available for: " + ", ".join(sheet_texts) + ". Each tracks Yield, HarvestedArea, CarryIn, CarryOut, and Consumption."
         await graphiti.add_episode(
-            name="LDC_Balance_Sheets",
+            name="Demo_Balance_Sheets",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Balance Sheets",
+            source_description="Demo Balance Sheets",
             reference_time=datetime.now()
         )
     
@@ -233,20 +233,20 @@ async def load_weather_indicators():
     for row in results:
         indicator_texts.append(f"{row['name']} ({row['type']})")
     
-    if indicator_texts:
+if indicator_texts:
         text = "Weather indicators available: " + ", ".join(indicator_texts) + ". These track temperature, precipitation, soil moisture, and vegetation conditions."
         await graphiti.add_episode(
-            name="LDC_Weather_Indicators",
+            name="Demo_Weather_Indicators",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Weather Indicators",
+            source_description="Demo Weather Indicators",
             reference_time=datetime.now()
         )
     
     print(f"✓ Loaded weather indicator data ({len(results)} indicators)")
 
 async def main():
-    """Load all LDC data into Graphiti."""
+    """Load all Demo data into Graphiti."""
     try:
         await load_commodity_data()
         await load_geography_data()
@@ -256,7 +256,7 @@ async def main():
         await load_weather_indicators()
         
         print("\n" + "="*60)
-        print("✅ LDC data successfully loaded into Graphiti (Neo4j)!")
+print("✅ Demo data successfully loaded into Graphiti (Neo4j)!")
         print("="*60)
         print()
         print("Graphiti now has semantic embeddings for:")

@@ -1,6 +1,6 @@
 """
-Populate Graphiti with LDC Data for Semantic Search (ORM Version)
-Creates episodes from structured LDC data using FalkorDB ORM repositories
+Populate Graphiti with Demo Data for Semantic Search (ORM Version)
+Creates episodes from structured Demo data using FalkorDB ORM repositories
 """
 
 import os
@@ -29,9 +29,9 @@ from src.repositories import GeographyRepository, CommodityRepository, BalanceSh
 from falkordb_orm import Repository
 
 print("\n" + "="*60)
-print("🚀 LDC Graphiti Data Loader (ORM Version)")
+print("🚀 Demo Graphiti Data Loader (ORM Version)")
 print("="*60)
-print("Loading structured LDC data into Graphiti using FalkorDB ORM")
+print("Loading structured Demo data into Graphiti using FalkorDB ORM")
 print()
 
 # Initialize FalkorDB connection
@@ -92,12 +92,12 @@ async def load_commodity_data():
     
     # Add as single episode with all commodity info
     if commodity_texts:
-        text = "LDC commodities: " + ". ".join(commodity_texts) + "."
+        text = "Demo commodities: " + ". ".join(commodity_texts) + "."
         await graphiti.add_episode(
-            name="LDC_Commodities",
+            name="Demo_Commodities",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Commodity Hierarchy",
+            source_description="Demo Commodity Hierarchy",
             reference_time=datetime.now()
         )
     
@@ -118,12 +118,12 @@ async def load_geography_data():
         text_parts.append(f"{country.name}{code_str}")
     
     if text_parts:
-        text = "LDC system covers " + " and ".join(text_parts) + " for commodity trading and production analysis."
+        text = "Demo system covers " + " and ".join(text_parts) + " for commodity trading and production analysis."
         await graphiti.add_episode(
-            name="LDC_Countries",
+            name="Demo_Countries",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Geography",
+            source_description="Demo Geography",
             reference_time=datetime.now()
         )
     
@@ -161,10 +161,10 @@ async def load_trade_flows():
     if flow_texts:
         text = "Trade flows: " + ". ".join(flow_texts) + "."
         await graphiti.add_episode(
-            name="LDC_Trade_Flows",
+            name="Demo_Trade_Flows",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Trade Flows",
+            source_description="Demo Trade Flows",
             reference_time=datetime.now()
         )
     
@@ -196,10 +196,10 @@ async def load_production_areas():
     if prod_texts:
         text = "Production areas tracked for: " + ", ".join(prod_texts) + "."
         await graphiti.add_episode(
-            name="LDC_Production_Areas",
+            name="Demo_Production_Areas",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Production Areas",
+            source_description="Demo Production Areas",
             reference_time=datetime.now()
         )
     
@@ -238,10 +238,10 @@ async def load_balance_sheets():
     if sheet_texts:
         text = "Balance sheets available for: " + ", ".join(sheet_texts) + ". Each tracks Yield, HarvestedArea, CarryIn, CarryOut, and Consumption."
         await graphiti.add_episode(
-            name="LDC_Balance_Sheets",
+            name="Demo_Balance_Sheets",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Balance Sheets",
+            source_description="Demo Balance Sheets",
             reference_time=datetime.now()
         )
     
@@ -279,10 +279,10 @@ async def load_weather_indicators():
     if indicator_texts:
         text = "Weather indicators available: " + ", ".join(indicator_texts) + ". From sources including ECMWF IFS, NCEP GEFS, NCEP GFS, and ECMWF AIFS."
         await graphiti.add_episode(
-            name="LDC_Weather_Indicators",
+            name="Demo_Weather_Indicators",
             episode_body=text,
             source=EpisodeType.text,
-            source_description="LDC Weather Indicators",
+            source_description="Demo Weather Indicators",
             reference_time=datetime.now()
         )
     
@@ -290,7 +290,7 @@ async def load_weather_indicators():
 
 
 async def main():
-    """Load all LDC data into Graphiti using ORM."""
+    """Load all Demo data into Graphiti using ORM."""
     try:
         await load_commodity_data()
         await load_geography_data()
@@ -300,7 +300,7 @@ async def main():
         await load_weather_indicators()
         
         print("\n" + "="*60)
-        print("✅ LDC data successfully loaded into Graphiti (ORM)!")
+        print("✅ Demo data successfully loaded into Graphiti (ORM)!")
         print("="*60)
         print()
         print("Graphiti now has semantic embeddings for:")

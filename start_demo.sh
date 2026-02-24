@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# Tijara Knowledge Graph - Startup Script
-# This script starts the Tijara API server with all required environment variables
-# Usage: ./start_tijara.sh [start|stop|restart|status]
+# Demo Knowledge Graph - Startup Script
+# This script starts the Demo API server with all required environment variables
+# Usage: ./start_demo.sh [start|stop|restart|status]
 
 # Set the project directory
-PROJECT_DIR="/Users/shaharbiron/Documents/FalkorDB/Poc/LDC/tijara-knowledge-graph-orm"
+PROJECT_DIR="/Users/shaharbiron/Documents/FalkorDB/Poc/LDC/demo-knowledge-graph-orm"
 
 # Function to stop the service
 stop_service() {
-    echo "Stopping Tijara service..."
+echo "Stopping Demo service..."
     if lsof -Pi :8080 -sTCP:LISTEN -t > /dev/null 2>&1; then
         lsof -ti:8080 | xargs kill -9 2>/dev/null
         sleep 2
@@ -25,11 +25,11 @@ stop_service() {
 check_status() {
     if lsof -Pi :8080 -sTCP:LISTEN -t > /dev/null 2>&1; then
         PID=$(lsof -ti:8080)
-        echo "✅ Tijara service is RUNNING (PID: $PID)"
+echo "✅ Demo service is RUNNING (PID: $PID)"
         echo "   URL: http://localhost:8080"
         return 0
     else
-        echo "❌ Tijara service is NOT RUNNING"
+echo "❌ Demo service is NOT RUNNING"
         return 1
     fi
 }
@@ -37,7 +37,7 @@ check_status() {
 # Function to start the service
 start_service() {
     echo "======================================================================"
-    echo "Starting Tijara Knowledge Graph Solution"
+echo "Starting Demo Knowledge Graph Solution"
     echo "======================================================================"
 
 # Set OpenAI API Key (must be set in environment or config file)
@@ -76,10 +76,10 @@ fi
     cd "$PROJECT_DIR"
 
     echo ""
-    echo "Starting Tijara API server with ORM..."
+echo "Starting Demo API server with ORM..."
     echo "  - API URL: http://localhost:8080"
     echo "  - Web UI: http://localhost:8080"
-    echo "  - FalkorDB: localhost:6379 (ldc_graph) with ORM Layer"
+echo "  - FalkorDB: localhost:6379 (demo_graph) with ORM Layer"
     echo "  - Graphiti: Enabled with OpenAI"
     echo ""
 
@@ -102,12 +102,12 @@ fi
         echo "Open your browser at: http://localhost:8080"
         echo ""
         echo "To stop the server, run:"
-        echo "  ./start_tijara.sh stop"
+echo "  ./start_demo.sh stop"
         echo "  OR"
         echo "  lsof -ti:8080 | xargs kill -9"
         echo ""
         echo "To restart the server:"
-        echo "  ./start_tijara.sh restart"
+echo "  ./start_demo.sh restart"
         echo ""
         echo "To view logs:"
         echo "  tail -f $PROJECT_DIR/api.log"
@@ -119,7 +119,7 @@ fi
     fi
 
     echo "======================================================================"
-    echo "Tijara Knowledge Graph is ready!"
+echo "Demo Knowledge Graph is ready!"
     echo "======================================================================"
 }
 
@@ -135,7 +135,7 @@ case $COMMAND in
         ;;
     restart)
         echo "======================================================================"
-        echo "Restarting Tijara Knowledge Graph Solution"
+echo "Restarting Demo Knowledge Graph Solution"
         echo "======================================================================"
         echo ""
         stop_service
@@ -150,9 +150,9 @@ case $COMMAND in
         echo "Usage: $0 {start|stop|restart|status}"
         echo ""
         echo "Commands:"
-        echo "  start   - Start the Tijara service"
-        echo "  stop    - Stop the Tijara service"
-        echo "  restart - Restart the Tijara service"
+echo "  start   - Start the Demo service"
+echo "  stop    - Stop the Demo service"
+echo "  restart - Restart the Demo service"
         echo "  status  - Check service status"
         echo ""
         exit 1

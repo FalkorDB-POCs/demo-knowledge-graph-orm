@@ -1,10 +1,10 @@
 # Tijara Knowledge Graph Ontology Schema
-# Based on LDC commodity trading domain
+# Based on Demo commodity trading domain
 
 # Core Concepts (Abstract Types)
 concepts:
   Commodity:
-    description: "Agricultural commodities traded by LDC"
+description: "Agricultural commodities traded by Demo"
     properties:
       - name
       - category
@@ -341,7 +341,7 @@ data_sources:
     update_frequency: weekly
     
   - name: SnD
-    description: "LDC Supply & Demand Database"
+description: "Demo Supply & Demand Database"
     types: [Production, Consumption, Trade]
     update_frequency: daily
     
@@ -351,7 +351,7 @@ data_sources:
     update_frequency: monthly
     
   - name: CADI
-    description: "LDC internal database"
+description: "Demo internal database"
     types: [Prices, Contracts, Positions]
     update_frequency: real-time
     

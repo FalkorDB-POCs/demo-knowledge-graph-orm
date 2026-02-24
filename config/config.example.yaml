@@ -1,10 +1,10 @@
-# Tijara Knowledge Graph Configuration
+# Demo Knowledge Graph Configuration
 
 # FalkorDB Connection
 falkordb:
   host: "localhost"
   port: 6379
-  graph_name: "tijara_kg"
+graph_name: "demo_kg"
   username: null
   password: null
   ssl: false
@@ -35,7 +35,7 @@ api:
   log_level: "info"
   cors_origins:
     - "http://localhost:3000"
-    - "https://ldc-internal.com"
+- "https://demo-internal.com"
   
 # Redis Cache (not currently used)
 # redis:

@@ -6,12 +6,12 @@
 (async function() {
     'use strict';
     
-    const THEME_CONFIG = {
-        ldc: {
-            css: '/static/css/theme-ldc.css',
-            name: 'LDC Production',
+const THEME_CONFIG = {
+        production: {
+            css: '/static/css/theme-production.css',
+            name: 'Production',
             icon: 'fa-building',
-            badge: 'LDC Production Data'
+            badge: 'Production Data'
         },
         demo: {
             css: '/static/css/theme-demo.css',
@@ -33,9 +33,9 @@
             return await response.json();
         } catch (error) {
             console.warn('Could not fetch config, defaulting to demo theme:', error);
-            return {
+return {
                 dataset_type: 'demo',
-                graph_name: 'tijara_graph',
+                graph_name: 'knowledge_graph',
                 theme: 'theme-demo.css'
             };
         }
@@ -105,8 +105,8 @@
         const quickQuestionsContainer = document.querySelector('.quick-questions');
         if (!quickQuestionsContainer) return;
         
-        const ldcQuestions = [
-            "What countries are in the LDC system?",
+const productionQuestions = [
+            "What countries are in the system?",
             "What commodities does France export to the United States?",
             "What commodities does USA export to France?",
             "What balance sheets are available in the system?",
@@ -123,7 +123,7 @@
             "Show me export data for soybeans"
         ];
         
-        const questions = datasetType === 'ldc' ? ldcQuestions : demoQuestions;
+const questions = datasetType === 'production' ? productionQuestions : demoQuestions;
         
         // Update button text
         const buttons = quickQuestionsContainer.querySelectorAll('.quick-question-btn');
@@ -139,8 +139,8 @@
      * Update page title based on dataset
      */
     function updatePageTitle(datasetType) {
-        const titleSuffix = datasetType === 'ldc' ? 'LDC Commodity Intelligence' : 'Demo & Testing';
-        document.title = `Tijara Knowledge Graph - ${titleSuffix}`;
+const titleSuffix = datasetType === 'production' ? 'Commodity Intelligence' : 'Demo & Testing';
+        document.title = `Knowledge Graph - ${titleSuffix}`;
     }
     
     /**
@@ -187,7 +187,7 @@
             emitThemeChangeEvent(config);
             
             // Store config globally for other scripts
-            window.TIJARA_CONFIG = config;
+window.KNOWLEDGE_GRAPH_CONFIG = config;
             
         } catch (error) {
             console.error('Theme initialization error:', error);
@@ -198,7 +198,7 @@
     initialize();
     
     // Expose API for manual theme switching (for testing)
-    window.TijaraTheme = {
+window.KnowledgeGraphTheme = {
         switch: async function(datasetType) {
             if (THEME_CONFIG[datasetType]) {
                 const themeConfig = loadTheme(datasetType);
@@ -211,7 +211,7 @@
             }
         },
         reload: initialize,
-        getConfig: () => window.TIJARA_CONFIG
+getConfig: () => window.KNOWLEDGE_GRAPH_CONFIG
     };
     
 })();

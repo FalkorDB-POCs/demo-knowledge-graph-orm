@@ -1,5 +1,5 @@
 """
-Load LDC Dataset into Neo4j
+Load Demo Dataset into Neo4j
 Parallel loader that creates the same graph structure in Neo4j as in FalkorDB
 """
 
@@ -28,8 +28,8 @@ NEO4J_PASSWORD = "six666six"
 NEO4J_DATABASE = "neo4j"
 
 
-class Neo4jLDCLoader:
-    """Loads LDC commodity data from CSV files into Neo4j."""
+class Neo4jDemoLoader:
+    """Loads Demo commodity data from CSV files into Neo4j."""
     
     def __init__(self):
         """Initialize connection to Neo4j."""
@@ -473,7 +473,7 @@ class Neo4jLDCLoader:
     def load_all(self):
         """Load all data from CSV files."""
         print("\n" + "="*60)
-        print("🚀 Neo4j LDC Data Loader")
+        print("🚀 Neo4j Demo Data Loader")
         print("="*60)
         print(f"Input directory: {INPUT_DIR}")
         print(f"Target database: {NEO4J_DATABASE}")
@@ -496,12 +496,12 @@ class Neo4jLDCLoader:
         # Print statistics
         self.print_statistics()
         
-        print("\n✅ Neo4j LDC data loading complete!")
+        print("\n✅ Neo4j Demo data loading complete!")
         print(f"Database '{NEO4J_DATABASE}' is ready for use.")
 
 
 if __name__ == "__main__":
-    loader = Neo4jLDCLoader()
+    loader = Neo4jDemoLoader()
     try:
         loader.load_all()
     finally:

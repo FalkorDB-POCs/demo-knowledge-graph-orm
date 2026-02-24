@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Tijara Knowledge Graph - LDC Commodity Intelligence</title>
+<title>Demo Knowledge Graph - Demo Commodity Intelligence</title>
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="static/favicon.svg">
@@ -70,7 +70,7 @@
             <div class="header-content">
                 <div class="logo">
                     <i class="fas fa-project-diagram"></i>
-                    <h1>Tijara Knowledge Graph <span style="font-size: 0.6em; color: var(--accent-color); font-weight: normal;">(ORM)</span></h1>
+                    <h1>Demo Knowledge Graph <span style="font-size: 0.6em; color: var(--accent-color); font-weight: normal;">(ORM)</span></h1>
                 </div>
                 <div class="header-info">
                     <div class="status-indicators">
@@ -176,8 +176,8 @@
                     </div>
                     <div class="card-body">
                         <div class="quick-questions">
-                            <button class="quick-question-btn" data-question="What countries are in the LDC system?">
-                                What countries are in the LDC system?
+<button class="quick-question-btn" data-question="What countries are in the Demo system?">
+What countries are in the Demo system?
                             </button>
                             <button class="quick-question-btn" data-question="What commodities does France export to the United States?">
                                 What commodities does France export to the United States?
@@ -224,7 +224,7 @@
                                 <i class="fas fa-robot"></i>
                                 <div class="message-content">
                                     <strong>Trading Copilot</strong>
-                                    <p>Hello! I'm your LDC Trading Copilot powered by ORM (Object-Relational Mapping). Ask me anything about commodities, markets, trade flows, or production data.</p>
+                                    <p>Hello! I'm your Demo Trading Copilot powered by ORM (Object-Relational Mapping). Ask me anything about commodities, markets, trade flows, or production data.</p>
                                 </div>
                             </div>
                         </div>
@@ -505,7 +505,7 @@
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Sample CSV Datasets (LDC Format)</label>
+<label>Sample CSV Datasets (Demo Format)</label>
                             <div style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                                 <button class="btn btn-sm btn-secondary sample-data-btn" data-sample="commodity_hierarchy">
                                     <i class="fas fa-sitemap"></i> Commodity Hierarchy CSV
@@ -524,7 +524,7 @@
                                 </button>
                             </div>
                             <small class="form-hint">
-                                <i class="fas fa-info-circle"></i> These CSV formats match the LDC input files structure. Upload similar CSV files to add data.
+<i class="fas fa-info-circle"></i> These CSV formats match the Demo input files structure. Upload similar CSV files to add data.
                             </small>
                         </div>
 
@@ -568,7 +568,7 @@ OR JSON Format:
                                 rows="6"
                                 placeholder='{
   "data_type": "custom_entity",
-  "source": "LDC",
+"source": "Demo",
   "additional_context": "..."
 }'
                             ></textarea>
@@ -716,7 +716,7 @@ Brazil's soybean production reached 150 million metric tons in 2023, with export
                                 </optgroup>
                                 <option value="custom">Custom Geometry...</option>
                             </select>
-                            <small class="form-hint">Select a production area from LDC system or use custom geometry</small>
+<small class="form-hint">Select a production area from Demo system or use custom geometry</small>
                         </div>
 
                         <div class="form-group">
@@ -792,7 +792,7 @@ Brazil's soybean production reached 150 million metric tons in 2023, with export
             <div class="tab-content" id="discovery">
                 <div class="page-header">
                     <h2><i class="fas fa-search"></i> Data Discovery</h2>
-                    <p>Explore LDC commodities, geographies, trade flows, and production areas</p>
+<p>Explore Demo commodities, geographies, trade flows, and production areas</p>
                 </div>
 
                 <div class="card">
@@ -845,7 +845,7 @@ Brazil's soybean production reached 150 million metric tons in 2023, with export
                     </div>
                     <div class="card-body">
                         <div class="form-group">
-                            <label>Sample Cypher Queries (LDC Schema)</label>
+<label>Sample Cypher Queries (Demo Schema)</label>
                             <div class="quick-questions" style="display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1rem;">
                                 <button class="btn btn-sm btn-secondary sample-query-btn" data-query='MATCH (g1:Geography {name: "France"})-[t:TRADES_WITH]->(g2:Geography {name: "United States"})&#10;RETURN t.commodity as commodity, t.flow_type as type&#10;ORDER BY commodity'>
                                     France → USA Trade Flows
@@ -883,7 +883,7 @@ Brazil's soybean production reached 150 million metric tons in 2023, with export
                                 placeholder='MATCH (g1:Geography)-[t:TRADES_WITH]->(g2:Geography)&#10;RETURN g1.name as from, g2.name as to, t.commodity&#10;ORDER BY g1.name, g2.name&#10;LIMIT 10'
                             ></textarea>
                             <small class="form-hint">
-                                <i class="fas fa-info-circle"></i> Use LDC schema: Geography, Commodity, TRADES_WITH, PRODUCES, FOR_COMMODITY, etc.
+<i class="fas fa-info-circle"></i> Use Demo schema: Geography, Commodity, TRADES_WITH, PRODUCES, FOR_COMMODITY, etc.
                             </small>
                         </div>
 

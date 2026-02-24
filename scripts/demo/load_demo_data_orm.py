@@ -1,5 +1,5 @@
 """
-Populate LDC Knowledge Graph from Input CSV Files (ORM Version)
+Populate Demo Knowledge Graph from Input CSV Files (ORM Version)
 Loads data using FalkorDB ORM entity models and repositories
 """
 
@@ -27,16 +27,16 @@ from falkordb_orm import Repository
 INPUT_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'ldc', 'input')
 
 # Graph name
-LDC_GRAPH_NAME = "ldc_graph"
+Demo_GRAPH_NAME = "ldc_graph"
 
 
-class ORMLDCDataLoader:
-    """Loads LDC commodity data from CSV files using FalkorDB ORM."""
+class ORMDemoDataLoader:
+    """Loads Demo commodity data from CSV files using FalkorDB ORM."""
     
     def __init__(self):
         """Initialize connection and repositories."""
         print("\n" + "="*60)
-        print("🚀 LDC Data Loader (ORM Version)")
+        print("🚀 Demo Data Loader (ORM Version)")
         print("="*60)
         print(f"Using falkordb-py-orm with entity models and repositories")
         print()
@@ -52,8 +52,8 @@ class ORMLDCDataLoader:
             ssl=falkordb_config.get('ssl', False)
         )
         
-        self.graph = self.client.select_graph(LDC_GRAPH_NAME)
-        print(f"✓ Connected to FalkorDB graph: {LDC_GRAPH_NAME}")
+        self.graph = self.client.select_graph(Demo_GRAPH_NAME)
+        print(f"✓ Connected to FalkorDB graph: {Demo_GRAPH_NAME}")
         
         # Initialize ORM repositories
         self.commodity_repo = CommodityRepository(self.graph, Commodity)
@@ -71,7 +71,7 @@ class ORMLDCDataLoader:
     
     def clear_graph(self):
         """Clear the existing graph data."""
-        print(f"\n🗑️  Clearing existing data in {LDC_GRAPH_NAME}...")
+        print(f"\n🗑️  Clearing existing data in {Demo_GRAPH_NAME}...")
         try:
             self.graph.query("MATCH (n) DETACH DELETE n")
             print("✓ Graph cleared")
@@ -385,7 +385,7 @@ class ORMLDCDataLoader:
     def get_statistics(self):
         """Get graph statistics."""
         print("\n" + "="*60)
-        print("📊 LDC Graph Statistics")
+        print("📊 Demo Graph Statistics")
         print("="*60)
         print()
         
@@ -418,7 +418,7 @@ class ORMLDCDataLoader:
         print("\n" + "="*60)
     
     def load_all(self):
-        """Load all LDC data."""
+        """Load all Demo data."""
         try:
             # Clear existing data
             self.clear_graph()
@@ -436,8 +436,8 @@ class ORMLDCDataLoader:
             # Show statistics
             self.get_statistics()
             
-            print("\n✅ LDC data loading complete!")
-            print(f"Graph '{LDC_GRAPH_NAME}' is ready for use.")
+            print("\n✅ Demo data loading complete!")
+            print(f"Graph '{Demo_GRAPH_NAME}' is ready for use.")
             print("✨ All data loaded using FalkorDB ORM entities and repositories!")
             print()
             
@@ -449,5 +449,5 @@ class ORMLDCDataLoader:
 
 
 if __name__ == "__main__":
-    loader = ORMLDCDataLoader()
+    loader = ORMDemoDataLoader()
     loader.load_all()

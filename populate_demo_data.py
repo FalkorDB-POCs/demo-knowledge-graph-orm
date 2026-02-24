@@ -11,19 +11,19 @@ import falkordb
 import yaml
 
 # Load configuration
-CONFIG_PATH = os.path.join(os.path.dirname(__file__), '..', '..', 'config', 'config.yaml')
+CONFIG_PATH = os.path.join(os.path.dirname(__file__), 'config', 'config.yaml')
 with open(CONFIG_PATH, 'r') as f:
     config = yaml.safe_load(f)
 
 # Input data directory
-INPUT_DIR = os.path.join(os.path.dirname(__file__), '..', '..', 'data', 'ldc', 'input')
+INPUT_DIR = os.path.join(os.path.dirname(__file__), '..', 'input-files-from-ldc')
 
-# New graph name for LDC data
-LDC_GRAPH_NAME = "ldc_graph"
+# New graph name for Demo data
+LDC_GRAPH_NAME = "demo_graph"
 
 
-class LDCDataLoader:
-    """Loads LDC commodity data from CSV files into FalkorDB."""
+class DemoDataLoader:
+    """Loads Demo commodity data from CSV files into FalkorDB."""
     
     def __init__(self):
         """Initialize connection to FalkorDB."""
@@ -516,18 +516,17 @@ class LDCDataLoader:
                 pass
         
         print("✓ Indexes created")
-    
     def print_statistics(self):
         """Print graph statistics."""
-        print("\n" + "="*60)
-        print("📊 LDC Graph Statistics")
+        print("\\n" + "="*60)
+        print("📊 Demo Graph Statistics")
         print("="*60)
         
         # Node counts
         node_query = "MATCH (n) RETURN labels(n)[0] as type, count(n) as count ORDER BY count DESC"
         result = self.graph.query(node_query)
         
-        print("\nNodes:")
+        print("\\nNodes:")
         total_nodes = 0
         for row in result.result_set:
             node_type = row[0]
@@ -540,7 +539,7 @@ class LDCDataLoader:
         rel_query = "MATCH ()-[r]->() RETURN type(r) as type, count(r) as count ORDER BY count DESC"
         result = self.graph.query(rel_query)
         
-        print("\nRelationships:")
+        print("\\nRelationships:")
         total_rels = 0
         for row in result.result_set:
             rel_type = row[0]
@@ -549,12 +548,13 @@ class LDCDataLoader:
             print(f"  {rel_type}: {count}")
         print(f"  TOTAL: {total_rels}")
         
+        print("\\n" + "="*60)
         print("\n" + "="*60)
     
     def load_all(self):
         """Load all data from CSV files."""
-        print("\n" + "="*60)
-        print("🚀 LDC Data Loader")
+        print("\\n" + "="*60)
+        print("🚀 Demo Data Loader")
         print("="*60)
         print(f"Input directory: {INPUT_DIR}")
         print(f"Target graph: {LDC_GRAPH_NAME}")
@@ -577,10 +577,10 @@ class LDCDataLoader:
         # Print statistics
         self.print_statistics()
         
-        print("\n✅ LDC data loading complete!")
+        print("\\n✅ Demo data loading complete!")
         print(f"Graph '{LDC_GRAPH_NAME}' is ready for use.")
 
 
 if __name__ == "__main__":
-    loader = LDCDataLoader()
+    loader = DemoDataLoader()
     loader.load_all()

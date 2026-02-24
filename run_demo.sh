@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# LDC Knowledge Graph - Complete Demo Setup Script
-# This script loads all data (LDC, RBAC, Graphiti) and starts the API/UI
+# Knowledge Graph - Complete Demo Setup Script
+# This script loads all data (Production, RBAC, Graphiti) and starts the API/UI
 # Usage: ./run_demo.sh [--skip-data]
 
 set -e  # Exit on any error
@@ -47,7 +47,7 @@ if [[ "$1" == "--skip-data" ]]; then
     SKIP_DATA=true
 fi
 
-print_header "LDC Knowledge Graph Demo Setup"
+print_header "Knowledge Graph Demo Setup"
 
 # Step 1: Check Prerequisites
 print_header "Step 1: Checking Prerequisites"
@@ -125,12 +125,12 @@ fi
 if [ "$SKIP_DATA" = false ]; then
     print_header "Step 3: Loading Data"
     
-    # Load LDC structured data
-    print_info "Loading LDC structured data (3,444 nodes, 14,714 relationships)..."
-    if python3 scripts/ldc/load_ldc_data.py; then
-        print_success "LDC data loaded successfully"
+# Load Production structured data
+    print_info "Loading Production structured data (3,444 nodes, 14,714 relationships)..."
+    if python3 populate_demo_data.py; then
+        print_success "Production data loaded successfully"
     else
-        print_error "Failed to load LDC data"
+        print_error "Failed to load Production data"
         exit 1
     fi
     
@@ -153,7 +153,7 @@ if [ "$SKIP_DATA" = false ]; then
     
     # Load Graphiti episodes
     print_info "Loading Graphiti semantic embeddings..."
-    if python3 scripts/ldc/load_ldc_graphiti.py; then
+    if python3 scripts/demo/load_demo_graphiti.py; then
         print_success "Graphiti data loaded successfully"
     else
         print_warning "Failed to load Graphiti data (may be due to missing OpenAI key)"
@@ -171,11 +171,11 @@ print_header "Step 4: Starting API Server"
 # Set Python path
 export PYTHONPATH="$PROJECT_DIR"
 
-print_info "Starting Tijara API server..."
-print_info "  - API URL: http://localhost:8080"
-print_info "  - Web UI: http://localhost:8080"
-print_info "  - Graph: ldc_graph (FalkorDB)"
-print_info "  - RBAC: tijara_rbac (FalkorDB)"
+print_info "Starting Knowledge Graph API server..."
+   print_info "  - API URL: http://localhost:8080"
+   print_info "  - Web UI: http://localhost:8080"
+   print_info "  - Graph: production_graph (FalkorDB)"
+   print_info "  - RBAC: rbac_graph (FalkorDB)"
 print_info "  - Graphiti: graphiti (FalkorDB + OpenAI)"
 
 # Start server in background
@@ -205,7 +205,7 @@ else
 fi
 
 # Step 5: Summary
-print_header "🎉 LDC Knowledge Graph Demo is Ready!"
+print_header "🎉 Knowledge Graph Demo is Ready!"
 
 echo ""
 echo "Access the system:"

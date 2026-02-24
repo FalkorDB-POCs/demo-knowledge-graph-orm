@@ -1,4 +1,4 @@
-// Tijara Knowledge Graph - Admin Panel JavaScript
+// Demo Knowledge Graph - Admin Panel JavaScript
 
 const API_BASE = 'http://127.0.0.1:8080';
 console.log('[Admin.js] Loaded. API_BASE:', API_BASE);
