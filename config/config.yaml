@@ -42,6 +42,10 @@ graphiti:
 openai:
   api_key: null  # Set via OPENAI_API_KEY environment variable
   organization: null
+
+# GitHub API (set via environment variable GITHUB_TOKEN)
+github:
+  token: null  # Set via GITHUB_TOKEN environment variable
   
 # API Server
 api:
