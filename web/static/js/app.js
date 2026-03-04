@@ -737,6 +737,7 @@ function copyToClipboard(text) {
 function initIngestion() {
     $('ingestBtn').addEventListener('click', ingestData);
     $('ingestDocumentBtn').addEventListener('click', ingestDocument);
+    $('ingestGitHubBtn').addEventListener('click', ingestGitHub);
     
 // Demo CSV format sample datasets
     const sampleDatasets = {
@@ -997,6 +998,59 @@ function displayDocumentIngestionResults(result) {
     }
     
     showResult('documentIngestionResult');
+}
+
+async function ingestGitHub() {
+    const repo = $('githubRepo').value.trim();
+    const token = $('githubToken').value.trim();
+    const ingestIssues = $('githubIngestIssues').checked;
+    const ingestPRs = $('githubIngestPRs').checked;
+    const ingestCommits = $('githubIngestCommits').checked;
+    const maxItems = parseInt($('githubMaxItems').value, 10) || 50;
+
+    if (!repo) {
+        showToast('Please enter a repository (owner/name)', 'warning');
+        return;
+    }
+
+    hideResult('githubIngestionResult');
+    showLoader('githubIngestionLoader');
+
+    try {
+        const result = await apiCall('/ingest/github', {
+            method: 'POST',
+            body: JSON.stringify({
+                repo,
+                token: token || null,
+                ingest_issues: ingestIssues,
+                ingest_pull_requests: ingestPRs,
+                ingest_commits: ingestCommits,
+                max_items: maxItems
+            })
+        });
+
+        const stats = $('githubIngestionStats');
+        const ingested = result.ingested || {};
+        stats.innerHTML = `
+            <div class="stat-card">
+                <div class="stat-label">Repository</div>
+                <div class="stat-value" style="font-size:0.85rem;">${result.repository}</div>
+            </div>
+            ${ingested.issues !== undefined ? `<div class="stat-card"><div class="stat-label">Issues</div><div class="stat-value">${ingested.issues}</div></div>` : ''}
+            ${ingested.pull_requests !== undefined ? `<div class="stat-card"><div class="stat-label">Pull Requests</div><div class="stat-value">${ingested.pull_requests}</div></div>` : ''}
+            ${ingested.commits !== undefined ? `<div class="stat-card"><div class="stat-label">Commits</div><div class="stat-value">${ingested.commits}</div></div>` : ''}
+            <div class="stat-card">
+                <div class="stat-label">Total Nodes</div>
+                <div class="stat-value">${result.total_nodes_created}</div>
+            </div>
+        `;
+        showResult('githubIngestionResult');
+        showToast('Repository ingested successfully!');
+    } catch (error) {
+        showToast(`Error: ${error.message}`, 'error');
+    } finally {
+        hideLoader('githubIngestionLoader');
+    }
 }
 
 // Use Case 4: Impact Analysis
