@@ -673,6 +673,87 @@ Brazil's soybean production reached 150 million metric tons in 2023, with export
                         </div>
                     </div>
                 </div>
+
+                <!-- GitHub Repository Ingestion Card -->
+                <div class="card">
+                    <div class="card-header">
+                        <h3><i class="fab fa-github"></i> Ingest GitHub Repository</h3>
+                    </div>
+                    <div class="card-body">
+                        <p style="margin-bottom: 1rem; color: var(--text-secondary);">
+                            <i class="fas fa-info-circle"></i>
+                            Connect to a GitHub repository and import its issues, pull requests, and commits as nodes in the knowledge graph.
+                            Provide a <a href="https://docs.github.com/en/authentication/keeping-your-account-and-data-secure/managing-your-personal-access-tokens" target="_blank">GitHub Personal Access Token</a> to authenticate.
+                        </p>
+
+                        <div class="form-group">
+                            <label>Repository (owner/name)</label>
+                            <input
+                                type="text"
+                                id="githubRepo"
+                                class="form-control"
+                                placeholder="e.g. FalkorDB-POCs/demo-knowledge-graph-orm"
+                            >
+                        </div>
+
+                        <div class="form-group">
+                            <label>GitHub Personal Access Token</label>
+                            <input
+                                type="password"
+                                id="githubToken"
+                                class="form-control"
+                                placeholder="ghp_xxxxxxxxxxxxxxxxxxxx"
+                            >
+                            <small class="form-hint"><i class="fas fa-lock"></i> The token is sent directly to the API and is never stored.</small>
+                        </div>
+
+                        <div class="form-group" style="display: flex; gap: 2rem; flex-wrap: wrap;">
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="githubIngestIssues" checked>
+                                Issues
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="githubIngestPRs" checked>
+                                Pull Requests
+                            </label>
+                            <label class="checkbox-label">
+                                <input type="checkbox" id="githubIngestCommits">
+                                Commits
+                            </label>
+                        </div>
+
+                        <div class="form-group">
+                            <label>Max items per resource type</label>
+                            <input
+                                type="number"
+                                id="githubMaxItems"
+                                class="form-control"
+                                value="50"
+                                min="1"
+                                max="500"
+                                style="width: 120px;"
+                            >
+                        </div>
+
+                        <button class="btn btn-primary" id="ingestGitHubBtn">
+                            <i class="fab fa-github"></i> Ingest Repository
+                        </button>
+
+                        <div class="result-container" id="githubIngestionResult" style="display: none;">
+                            <div class="result-header">
+                                <h4><i class="fas fa-check-circle"></i> Repository Ingested</h4>
+                            </div>
+                            <div class="result-body">
+                                <div class="stats-grid" id="githubIngestionStats"></div>
+                            </div>
+                        </div>
+
+                        <div class="loader" id="githubIngestionLoader" style="display: none;">
+                            <div class="spinner"></div>
+                            <p>Fetching data from GitHub...</p>
+                        </div>
+                    </div>
+                </div>
             </div>
 
             <!-- Tab 4: Impact Analysis -->

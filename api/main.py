@@ -109,6 +109,15 @@ class DocumentIngestionRequest(BaseModel):
     metadata: Optional[Dict[str, Any]] = None
 
 
+class GitHubIngestionRequest(BaseModel):
+    repo: str  # e.g. "owner/repo-name"
+    token: Optional[str] = None  # GitHub personal access token (overrides env var)
+    ingest_issues: bool = True
+    ingest_pull_requests: bool = True
+    ingest_commits: bool = False
+    max_items: int = 50  # Max items per resource type
+
+
 class AnalyticsRequest(BaseModel):
     algorithm: str
     filters: Optional[Dict[str, Any]] = None
@@ -492,6 +501,149 @@ async def ingest_document(request: DocumentIngestionRequest):
         }
     except Exception as e:
         raise HTTPException(status_code=500, detail=f"Document ingestion failed: {str(e)}")
+
+
+
+@app.post("/ingest/github", dependencies=[Depends(require_permission("ingestion:write"))])
+async def ingest_github(request: GitHubIngestionRequest):
+    """
+    Ingest data from a GitHub repository into the knowledge graph.
+
+    Fetches issues, pull requests, and/or commits from the specified repository
+    and adds them as nodes and relationships in the graph.
+
+    Requires a GitHub personal access token either via the `token` field or the
+    `GITHUB_TOKEN` environment variable (or `github.token` in config.yaml).
+
+    Example:
+    ```json
+    {
+        "repo": "owner/repo-name",
+        "ingest_issues": true,
+        "ingest_pull_requests": true,
+        "ingest_commits": false,
+        "max_items": 50
+    }
+    ```
+    """
+    try:
+        from github import Github, GithubException
+
+        # Resolve token: request field > env var > config
+        github_token = (
+            request.token
+            or os.environ.get("GITHUB_TOKEN")
+            or (config.get("github", {}) or {}).get("token")
+        )
+
+        if not github_token:
+            raise HTTPException(
+                status_code=400,
+                detail=(
+                    "GitHub token not provided. Supply it in the request body, "
+                    "set the GITHUB_TOKEN environment variable, or add github.token "
+                    "to config/config.yaml."
+                ),
+            )
+
+        gh = Github(github_token)
+
+        try:
+            repo_obj = gh.get_repo(request.repo)
+        except GithubException as exc:
+            raise HTTPException(
+                status_code=400,
+                detail=f"Could not access GitHub repository '{request.repo}': {exc.data.get('message', str(exc))}",
+            )
+
+        ingested_counts: Dict[str, int] = {}
+
+        # Ensure Repository node exists (parameterized)
+        kg.graph.query(
+            "MERGE (:GitHubRepository {name: $name, url: $url})",
+            {"name": repo_obj.full_name, "url": repo_obj.html_url},
+        )
+
+        # --- Issues ---
+        if request.ingest_issues:
+            count = 0
+            for issue in repo_obj.get_issues(state="all"):
+                if count >= request.max_items:
+                    break
+                if issue.pull_request:
+                    continue  # skip PRs listed under issues
+                kg.graph.query(
+                    "MERGE (n:GitHubIssue {number: $number, repo: $repo}) "
+                    "SET n.title = $title, n.state = $state, n.url = $url, n.body = $body",
+                    {
+                        "number": issue.number,
+                        "repo": repo_obj.full_name,
+                        "title": issue.title,
+                        "state": issue.state,
+                        "url": issue.html_url,
+                        "body": (issue.body or "")[:500],
+                    },
+                )
+                count += 1
+            ingested_counts["issues"] = count
+
+        # --- Pull Requests ---
+        if request.ingest_pull_requests:
+            count = 0
+            for pr in repo_obj.get_pulls(state="all"):
+                if count >= request.max_items:
+                    break
+                kg.graph.query(
+                    "MERGE (n:GitHubPullRequest {number: $number, repo: $repo}) "
+                    "SET n.title = $title, n.state = $state, n.url = $url, n.body = $body",
+                    {
+                        "number": pr.number,
+                        "repo": repo_obj.full_name,
+                        "title": pr.title,
+                        "state": pr.state,
+                        "url": pr.html_url,
+                        "body": (pr.body or "")[:500],
+                    },
+                )
+                count += 1
+            ingested_counts["pull_requests"] = count
+
+        # --- Commits ---
+        if request.ingest_commits:
+            count = 0
+            for commit in repo_obj.get_commits():
+                if count >= request.max_items:
+                    break
+                author_name = (
+                    commit.commit.author.name if commit.commit.author else "unknown"
+                )
+                kg.graph.query(
+                    "MERGE (n:GitHubCommit {sha: $sha, repo: $repo}) "
+                    "SET n.message = $message, n.author = $author, n.url = $url",
+                    {
+                        "sha": commit.sha,
+                        "repo": repo_obj.full_name,
+                        "message": commit.commit.message[:200],
+                        "author": author_name,
+                        "url": commit.html_url,
+                    },
+                )
+                count += 1
+            ingested_counts["commits"] = count
+
+        total = sum(ingested_counts.values())
+        return {
+            "status": "success",
+            "message": f"GitHub repository '{request.repo}' ingested successfully.",
+            "repository": repo_obj.full_name,
+            "ingested": ingested_counts,
+            "total_nodes_created": total,
+        }
+
+    except HTTPException:
+        raise
+    except Exception as exc:
+        raise HTTPException(status_code=500, detail=f"GitHub ingestion failed: {str(exc)}")
 
 
 @app.post("/analytics", dependencies=[Depends(require_permission("analytics:execute"))])
